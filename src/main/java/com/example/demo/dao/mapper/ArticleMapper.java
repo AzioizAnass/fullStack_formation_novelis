@@ -3,6 +3,7 @@ import com.example.demo.dao.domain.Article;
 import com.example.demo.dao.dto.ArticleDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 

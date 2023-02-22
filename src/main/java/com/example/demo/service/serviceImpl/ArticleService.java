@@ -12,6 +12,9 @@ package com.example.demo.service.serviceImpl;
         import com.example.demo.exceptionsHandler.exceptions.ArticleNotFoundException;
         import com.example.demo.service.serviceInterfaces.IArticleService;
         import org.springframework.beans.factory.annotation.Autowired;
+        import org.springframework.data.domain.Page;
+        import org.springframework.data.domain.PageRequest;
+        import org.springframework.data.domain.Pageable;
         import org.springframework.stereotype.Service;
 
         import java.util.List;
@@ -54,6 +57,11 @@ public class ArticleService implements IArticleService {
     public List<ArticleDto> findAllArticles() {
         return articleMapper.mapToArticles(articleRepository.findAll());
     }
+    @Override
+    public Page<Article> findAritclesByPage(Integer pageNo, Integer pageSize) {
+        Pageable pageable = PageRequest.of(pageNo,pageSize);
+        Page<Article> page = articleRepository.findAll(pageable);
+        return   page ; }
 
     @Override
     public ArticleDto findOneByIdArticle(long id)throws ArticleNotFoundException{
