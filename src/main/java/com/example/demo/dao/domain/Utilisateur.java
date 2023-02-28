@@ -17,6 +17,8 @@ public class Utilisateur {
     private String username;
     @Column
     private String password;
+    @Column
+    private String roles;
     @OneToMany(mappedBy = "utilisateur")
     private Set<Commentaire> commenatires ;
 }

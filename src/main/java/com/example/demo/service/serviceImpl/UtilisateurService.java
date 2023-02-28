@@ -8,6 +8,7 @@ import com.example.demo.dao.mapper.UtilisateurMapper;
 import com.example.demo.exceptionsHandler.exceptions.UserNotFoundException;
 import com.example.demo.service.serviceInterfaces.IUtilisateurService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -18,6 +19,11 @@ public class UtilisateurService implements IUtilisateurService {
     UtilisateuRepository userRepository ;
     @Autowired
     UtilisateurMapper userMapper ;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private JwtService jwtService;
     @Override
     public UtilisateurDto saveUser(UtilisateurDto user) {
         return userMapper.UtilisateurToUtilisateurDTO(userRepository.save(userMapper.UtilisateurDTOToUtilisateur(user)));
@@ -45,4 +51,17 @@ public class UtilisateurService implements IUtilisateurService {
     @Override
     public UtilisateurDto findUserById(long id) throws UserNotFoundException{
         return Optional.of(userMapper.UtilisateurToUtilisateurDTO(userRepository.findById(id).orElseThrow(()->new UserNotFoundException(id)))).get();
-}}
+}
+    public String addUser(Utilisateur userInfo) {
+        userInfo.setPassword(passwordEncoder.encode(userInfo.getPassword()));
+        userRepository.save(userInfo);
+        return "user added to system ";
+    }
+    public UtilisateurDto findByUsername(String str){
+        return userMapper.UtilisateurToUtilisateurDTO(userRepository.findByUsername(str).get());
+    }
+
+    public UtilisateurDto findByToken(String token)throws UserNotFoundException {
+        return userMapper.UtilisateurToUtilisateurDTO(userRepository.findByUsername(jwtService.extractUsername(token)).orElseThrow(()->new UserNotFoundException(1)));
+    }
+}
