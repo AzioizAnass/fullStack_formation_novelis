@@ -10,4 +10,5 @@ public class UtilisateurDto {
     private long userid;
     public String username;
     private String password;
+    private String roles ;
 }
