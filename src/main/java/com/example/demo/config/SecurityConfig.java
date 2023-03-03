@@ -18,6 +18,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -36,9 +42,9 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.cors().and().csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/users/login","/users/addUser").permitAll()
+                .requestMatchers("/users/login","/users/addUser","/users/token/*").permitAll()
                 .and()
-                .authorizeHttpRequests().requestMatchers("/articles/getAll","/articles/save","/articles/**","/comments/**")
+                .authorizeHttpRequests().requestMatchers("/articles/save","/articles/getAll","/comments/**","/articles/getAtricleByPage/**","/articles/**","/comments/save","/users/addComnt")
                 .authenticated().and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -64,5 +70,16 @@ public class SecurityConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        final List<String> allowedHeaders = Arrays.asList("Authorization", "Cache-Control", "Content-Type");
+        final List<String> allowedMethods = Arrays.asList("GET", "POST", "PUT", "DELETE", "PUT", "PATCH");
+        final List<String> allowedOrigins = Arrays.asList("*");
+        final CorsConfiguration corsConfiguration = new CorsConfiguration();
+        corsConfiguration.setAllowedHeaders(allowedHeaders);
+        corsConfiguration.setAllowedMethods(allowedMethods);
+        corsConfiguration.setAllowedOrigins(allowedOrigins);
+        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", corsConfiguration);    return source;}
 
 }

@@ -10,5 +10,8 @@ public class UtilisateurDto {
     private long userid;
     public String username;
     private String password;
-    private String roles ;
+    private String firstname;
+    private String lastname;
+    private String email;
+
 }

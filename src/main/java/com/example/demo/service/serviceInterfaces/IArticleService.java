@@ -15,7 +15,7 @@ public interface IArticleService {
     String deleteArticle(Long id);
 
     List<ArticleDto> findAllArticles();
-    Page<Article> findAritclesByPage(Integer pageNo, Integer pageSize);
+    Page<ArticleDto>  findAritclesByPage(Integer pageNo, Integer pageSize);
 
     ArticleDto findOneByIdArticle(long id)throws ArticleNotFoundException;
 

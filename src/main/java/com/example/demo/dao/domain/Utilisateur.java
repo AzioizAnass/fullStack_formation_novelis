@@ -16,6 +16,12 @@ public class Utilisateur {
     @Column
     private String username;
     @Column
+    private String firstname;
+    @Column
+    private String lastname;
+    @Column
+    private String email;
+    @Column
     private String password;
     @Column
     private String roles;

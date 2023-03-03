@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.dao.domain.Utilisateur;
 import com.example.demo.dao.dto.AuthRequest;
 import com.example.demo.dao.dto.CommentaireDto;
 import com.example.demo.dao.dto.UtilisateurDto;
@@ -37,8 +38,8 @@ public class UtilisateurController {
         this.utilisateurService = utilisateurService;
     }
     @PostMapping(value = "/addUser")
-    public String saveUser(@RequestBody UtilisateurDto user) {
-        utilisateurService.saveUser(user);
+    public String saveUser(@RequestBody Utilisateur user) {
+        utilisateurService.addUser(user);
         return jwtService.generateToken(user.getUsername());
     }
     @PutMapping(value = "/update/{id}")
@@ -61,6 +62,7 @@ public class UtilisateurController {
         return utilisateurService.findUserById(id);
     }
 
+    @CrossOrigin(origins = "http://localhost:8080")
     @PostMapping(value ="/addComnt")
     public CommentaireDto addComment(@RequestBody CommentaireDto cmntDto){
         return commentaireService.saveCommentaire(cmntDto);

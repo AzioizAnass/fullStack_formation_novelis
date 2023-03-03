@@ -40,7 +40,7 @@ public class ArticleController {
         return articleService.findAllArticles();
     }
     @GetMapping(value="getAtricleByPage/{pageNo}/{pageSize}")
-    public Page<Article> findAritclesByPage(@PathVariable Integer pageNo, @PathVariable Integer pageSize){
+    public Page<ArticleDto> findAritclesByPage(@PathVariable Integer pageNo, @PathVariable Integer pageSize){
         return articleService.findAritclesByPage(pageNo,pageSize);
     }
     @GetMapping(value = "/{id}")

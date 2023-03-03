@@ -2,6 +2,7 @@ package com.example.demo.service.serviceImpl;
 
 
 import com.example.demo.dao.domain.Utilisateur;
+import com.example.demo.dao.dto.AuthRequest;
 import com.example.demo.dao.dto.UtilisateurDto;
 import com.example.demo.dao.repository.UtilisateuRepository;
 import com.example.demo.dao.mapper.UtilisateurMapper;
@@ -25,8 +26,8 @@ public class UtilisateurService implements IUtilisateurService {
     @Autowired
     private JwtService jwtService;
     @Override
-    public UtilisateurDto saveUser(UtilisateurDto user) {
-        return userMapper.UtilisateurToUtilisateurDTO(userRepository.save(userMapper.UtilisateurDTOToUtilisateur(user)));
+    public UtilisateurDto saveUser(AuthRequest user) {
+        return userMapper.UtilisateurToUtilisateurDTO(userRepository.save(userMapper.AuthToEntity(user)));
     }
 
     @Override

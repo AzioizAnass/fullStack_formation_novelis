@@ -58,10 +58,10 @@ public class ArticleService implements IArticleService {
         return articleMapper.mapToArticles(articleRepository.findAll());
     }
     @Override
-    public Page<Article> findAritclesByPage(Integer pageNo, Integer pageSize) {
+    public Page<ArticleDto> findAritclesByPage(Integer pageNo, Integer pageSize) {
         Pageable pageable = PageRequest.of(pageNo,pageSize);
-        Page<Article> page = articleRepository.findAll(pageable);
-        return   page ; }
+        Page<Article> page = articleRepository.getAllBy(pageable);
+        return   page.map(articleMapper::articleToArticleDTO) ; }
 
     @Override
     public ArticleDto findOneByIdArticle(long id)throws ArticleNotFoundException{
